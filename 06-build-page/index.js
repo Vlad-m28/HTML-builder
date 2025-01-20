@@ -83,7 +83,7 @@ function compileStyles(bundlePath) {
 //4. Copies the assets folder into project-dist/assets
 
 const assetsPath = path.join(__dirname, '/assets');
-const distAssetsPath = path.join(projectDistPath, '/assets');
+const assetsDistPath = path.join(projectDistPath, '/assets');
 
 function copyDir(originalLink, copyLink) {
   fs.mkdir(copyLink, (err) => {
@@ -119,5 +119,5 @@ fs.rm(projectDistPath, { recursive: true }, () => {
   createFolder(projectDistPath);
   replaceTags(templatePath, templateDistPath, componentsPath);
   compileStyles(styleDistPath);
-  copyDir(assetsPath, distAssetsPath);
+  copyDir(assetsPath, assetsDistPath);
 });
