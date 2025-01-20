@@ -20,7 +20,7 @@ const templatePath = path.join(__dirname, 'template.html');
 const templateDistPath = path.join(projectDistPath, '/index.html');
 const componentsPath = path.join(__dirname, '/components');
 
-function replaceTemplateTags(readerPath, writerPath, paths) {
+function replaceTags(readerPath, writerPath, paths) {
   let templateReader = fs.createReadStream(readerPath, 'utf-8');
   let templateWriter = fs.createWriteStream(writerPath, 'utf-8');
 
@@ -57,9 +57,9 @@ function replaceTemplateTags(readerPath, writerPath, paths) {
 //3.Compiles styles from the styles folder into a single file and places it in project-dist/style.css
 
 const stylePath = path.join(__dirname, '/styles');
-const distBundlePath = path.join(projectDistPath, '/style.css');
+const styleDistPath = path.join(projectDistPath, '/style.css');
 
-function mergeStyles(bundlePath) {
+function compileStyles(bundlePath) {
   const fileWriter = fs.createWriteStream(bundlePath, 'utf-8');
   fs.readdir(stylePath, { withFileTypes: true }, (err, files) => {
     if (err) {
@@ -117,7 +117,7 @@ function copyDir(originalLink, copyLink) {
 
 fs.rm(projectDistPath, { recursive: true }, () => {
   createFolder(projectDistPath);
-  replaceTemplateTags(templatePath, templateDistPath, componentsPath);
-  mergeStyles(distBundlePath);
+  replaceTags(templatePath, templateDistPath, componentsPath);
+  compileStyles(styleDistPath);
   copyDir(assetsPath, distAssetsPath);
 });
